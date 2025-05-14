@@ -1,3 +1,10 @@
+import sys
+import os
+
+# Add the 'src' folder to the Python path
+src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.append(src_path)
+
 import azure.functions as func
 import logging
 import os
