@@ -1,18 +1,29 @@
-from kimchi_premium_tracker import get_coinone_btc_price, get_bitvavo_btc_price, get_eur_to_krw_fx_rate, compute_kimchi_premium, save_to_csv
-from datetime import datetime
-import schedule
-import time
+import azure.functions as func
+import logging
 import os
+from datetime import datetime
+from kimchi_premium_tracker import get_coinone_btc_price, get_bitvavo_btc_price, get_eur_to_krw_fx_rate, compute_kimchi_premium, save_to_csv
 
-def run_tracker():
+app = func.FunctionApp()
+
+@app.timer_trigger(schedule="0 */10 * * * *", arg_name="myTimer", run_on_startup=False, use_monitor=False)
+def PriceTracker(myTimer: func.TimerRequest) -> None:
+    if myTimer.past_due:
+        logging.info('The timer is past due!')
+
+    logging.info('Price Tracker function started.')
+
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     try:
+        # Fetch data
         krw_price = get_coinone_btc_price()
         eur_price = get_bitvavo_btc_price()
         fx_rate = get_eur_to_krw_fx_rate()
 
+        # Compute Kimchi Premium
         premium_pct, eur_price_converted = compute_kimchi_premium(krw_price, eur_price, fx_rate)
 
+        # Log data
         log = {
             "timestamp": now,
             "coinone_btc_krw": round(krw_price, 0),
@@ -22,21 +33,13 @@ def run_tracker():
             "kimchi_premium_percent": premium_pct
         }
 
+        # Save to CSV
         script_dir = os.path.dirname(os.path.abspath(__file__))
         data_path = os.path.join(script_dir, "..", "data", "kimchi_premium_log.csv")
         save_to_csv(log, data_path)
 
-        print("Logged Kimchi Premium:", premium_pct, "%")
-        print("Saved to:", os.path.abspath(data_path))
+        logging.info(f"Logged Kimchi Premium: {premium_pct}%")
+        logging.info(f"Saved to: {os.path.abspath(data_path)}")
 
     except Exception as e:
-        print("Error occurred:", e)
-
-# Schedule the tracker to run every 10 minutes
-schedule.every(10).minutes.do(run_tracker)
-
-if __name__ == "__main__":
-    print("Starting the price tracker...")
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+        logging.error(f"Error occurred: {e}")
