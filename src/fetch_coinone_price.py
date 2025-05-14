@@ -16,8 +16,12 @@ def get_coinone_btc_price():
         raise Exception("Failed to fetch Coinone BTC price:", data)
 
 def save_price_to_csv(data, filepath):
+    # Make sure the directory exists
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
     file_exists = os.path.isfile(filepath)
-    with open(filepath, mode="a", newline="") as f:
+
+    with open(filepath, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["timestamp", "price_krw"])
         if not file_exists:
             writer.writeheader()
@@ -25,6 +29,7 @@ def save_price_to_csv(data, filepath):
 
 if __name__ == "__main__":
     price_data = get_coinone_btc_price()
-    data_path = os.path.join("..", "data", "coinone_btc_price.csv")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(script_dir, "..", "data", "coinone_btc_price.csv")
     save_price_to_csv(price_data, data_path)
     print(f"Saved BTC price: ₩{price_data['price_krw']:,.0f} at {price_data['timestamp']}")
