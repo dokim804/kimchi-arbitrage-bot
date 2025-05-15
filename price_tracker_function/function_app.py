@@ -9,7 +9,7 @@ import azure.functions as func
 import logging
 import os
 from datetime import datetime
-from kimchi_premium_tracker import get_coinone_btc_price, get_bitvavo_btc_price, get_eur_to_krw_fx_rate, compute_kimchi_premium, save_to_csv
+from kimchi_premium_tracker import get_coinone_btc_price, get_bitvavo_btc_price, get_eur_to_krw_fx_rate, compute_kimchi_premium, save_to_blob_csv
 
 app = func.FunctionApp()
 
@@ -40,10 +40,12 @@ def PriceTracker(myTimer: func.TimerRequest) -> None:
             "kimchi_premium_percent": premium_pct
         }
 
-        # Save to CSV
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        data_path = os.path.join(script_dir, "..", "data", "kimchi_premium_log.csv")
-        save_to_csv(log, data_path)
+        # Save to Azure Blob Storage
+        connection_string = os.environ["KOREAN_PREMIUM_STORAGE_CONNECTION_STRING"]
+        container_name = "koreanpremium"  # Make sure this container exists in your storage account
+        blob_name = "korean_premium_log.csv"
+
+        save_to_blob_csv(log, connection_string, container_name, blob_name)
 
         logging.info(f"Logged Kimchi Premium: {premium_pct}%")
         logging.info(f"Saved to: {os.path.abspath(data_path)}")
