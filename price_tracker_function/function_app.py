@@ -48,7 +48,6 @@ def PriceTracker(myTimer: func.TimerRequest) -> None:
         save_to_blob_csv(log, connection_string, container_name, blob_name)
 
         logging.info(f"Logged Kimchi Premium: {premium_pct}%")
-        logging.info(f"Saved to: {os.path.abspath(data_path)}")
 
     except Exception as e:
         logging.error(f"Error occurred: {e}")
