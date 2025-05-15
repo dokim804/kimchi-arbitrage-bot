@@ -2,6 +2,7 @@ import requests
 import csv
 import os
 from datetime import datetime
+from azure.storage.blob import BlobServiceClient
 
 def get_coinone_btc_price():
     url = "https://api.coinone.co.kr/ticker?currency=btc"
@@ -25,6 +26,44 @@ def compute_kimchi_premium(krw_price, eur_price, fx_rate):
     eur_in_krw = eur_price * fx_rate
     premium_pct = ((krw_price - eur_in_krw) / eur_in_krw) * 100
     return round(premium_pct, 2), round(eur_in_krw, 0)
+
+def save_to_blob_csv(data, connection_string, container_name, blob_name):
+    # Convert dict to CSV row
+    import io
+    import csv
+
+    # Download existing blob content (if any)
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    container_client = blob_service_client.get_container_client(container_name)
+    blob_client = container_client.get_blob_client(blob_name)
+
+    # Ensure container exists
+    try:
+        container_client.create_container()
+    except Exception:
+        pass  # Container probably already exists
+
+    # Download existing CSV or create header
+    try:
+        existing = blob_client.download_blob().readall().decode("utf-8")
+        output = io.StringIO(existing)
+        reader = list(csv.reader(output))
+        header = reader[0]
+        rows = reader[1:]
+    except Exception:
+        header = list(data.keys())
+        rows = []
+
+    # Append new row
+    rows.append([str(data[k]) for k in header])
+
+    # Write all rows back to blob
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(header)
+    writer.writerows(rows)
+    output.seek(0)
+    blob_client.upload_blob(output.read(), overwrite=True)
 
 def save_to_csv(data, filepath):
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
