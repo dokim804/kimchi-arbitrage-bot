@@ -3,6 +3,8 @@ import csv
 import os
 from datetime import datetime
 from azure.storage.blob import BlobServiceClient
+import io
+import csv
 
 def get_coinone_btc_price():
     url = "https://api.coinone.co.kr/ticker?currency=btc"
@@ -28,9 +30,7 @@ def compute_kimchi_premium(krw_price, eur_price, fx_rate):
     return round(premium_pct, 2), round(eur_in_krw, 0)
 
 def save_to_blob_csv(data, connection_string, container_name, blob_name):
-    # Convert dict to CSV row
-    import io
-    import csv
+    container_name = "koreanpremium"
 
     # Download existing blob content (if any)
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
