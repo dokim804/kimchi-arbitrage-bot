@@ -13,7 +13,7 @@ from kimchi_premium_tracker import get_coinone_btc_price, get_bitvavo_btc_price,
 
 app = func.FunctionApp()
 
-@app.timer_trigger(schedule="* */10 * * * *", arg_name="myTimer", run_on_startup=False, use_monitor=False)
+@app.timer_trigger(schedule="* */20 * * * *", arg_name="myTimer", run_on_startup=False, use_monitor=False)
 def PriceTracker(myTimer: func.TimerRequest) -> None:
     if myTimer.past_due:
         logging.info('The timer is past due!')
