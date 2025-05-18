@@ -1,10 +1,28 @@
 // filepath: kimchi_premium_webapp/app/static/app.js
-const fetchData = async () => {
-    const response = await fetch('https://<your-azure-storage-account>.blob.core.windows.net/koreanpremium/korean_premium_log.csv');
-    const data = await response.text();
-    return parseCSV(data);
-};
+async function fetchData() {
+    const response = await fetch('/data');
+    const data = await response.json();
 
+    const labels = [];
+    const coinonePrices = [];
+    const bitvavoPrices = [];
+    const premiums = [];
+
+    data.forEach(row => {
+        labels.push(row.timestamp);
+        coinonePrices.push(parseFloat(row.coinone_btc_krw));
+        bitvavoPrices.push(parseFloat(row.bitvavo_btc_krw));
+        premiums.push(parseFloat(row.kimchi_premium_percent));
+    });
+
+    priceChart.data.labels = labels;
+    priceChart.data.datasets[0].data = coinonePrices;
+    priceChart.data.datasets[1].data = bitvavoPrices;
+    priceChart.data.datasets[2].data = premiums;
+    priceChart.update();
+}
+
+// Fetch data from the server and update the chart
 const parseCSV = (data) => {
     const rows = data.split('\n').slice(1);
     const coinoneBtcKrw = [];

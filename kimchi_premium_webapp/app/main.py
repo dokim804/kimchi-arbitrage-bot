@@ -26,9 +26,8 @@ def data():
     # Convert CSV data to DataFrame
     df = pd.read_csv(io.StringIO(data))
 
-    # Get the latest values
-    latest_data = df.iloc[-1].to_dict()
-    return jsonify(latest_data)
+    # Return all rows as a list of dicts
+    return jsonify(df.to_dict(orient='records'))
 
 if __name__ == '__main__':
     app.run(debug=True)

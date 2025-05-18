@@ -58,7 +58,7 @@
 
         // Function to fetch data from Azure Blob Storage
         async function fetchData() {
-            const response = await fetch('URL_TO_YOUR_AZURE_BLOB_STORAGE/korean_premium_log.csv');
+            const response = await fetch('/data');
             const data = await response.text();
             const rows = data.split('\n').slice(1); // Skip header
 
