@@ -15,7 +15,7 @@ This is not just a data science project — it’s a real-world opportunity to v
 - Automated alerts when arbitrage exceeds X%
 - Cost modeling for all stages of arbitrage
 - Profitability simulation with ROI calculations
- 
+
 ## 4. Web Application Features
 
 - Real-time line graph displaying:
@@ -29,22 +29,36 @@ This is not just a data science project — it’s a real-world opportunity to v
 ## 5. Setup Instructions (Web App)
 
 1. **Clone the repository:**
-   ```sh
-   git clone <repository-url>
-   cd <repository-folder>
 
-2. Install dependencies:
+   ```sh
+   git clone https://github.com/dokim804/kimchi-arbitrage-bot/tree/main
+   cd kimchi_premium_arbitrage_bot
+   ```
+
+2. **Install dependencies:**
+
+   ```sh
    pip install -r requirements.txt
-3. Run the application locally:
-    python app/main.py
+   ```
+
+3. **Run the application locally:**
+
+   ```sh
+   python app/main.py
+   ```
 
 Then open your browser to http://localhost:5000.
 
 ## 6. Deployment (Azure App Service)
+
 Deploy the repository root to Azure App Service.
 Set the startup command to:
-gunicorn app.main:app
+
+   ```sh
+   gunicorn app.main:app
+   ```
 
 ## 7. License
+
 This project is licensed under the MIT License. See the LICENSE file for details.
 Set your environment variable AZURE_STORAGE_CONNECTION_STRING in the Azure portal.
