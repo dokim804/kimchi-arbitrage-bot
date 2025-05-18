@@ -10,9 +10,8 @@ This is not just a data science project — it’s a real-world opportunity to v
 
 ## 3. Features
 
-- Real-time price tracking across 6+ exchanges
+- Real-time Bitcoin price tracking from Coinone (Korean exchange) and Bitvavo (Europpean exchange)
 - Live FX rate integration for KRW ↔ EUR
+- Automated alerts when arbitrage exceeds X%
 - Cost modeling for all stages of arbitrage
 - Profitability simulation with ROI calculations
-- Automated alerts when arbitrage exceeds X%
-  
