@@ -1,31 +1,37 @@
-// filepath: kimchi_premium_webapp/app/static/app.js
+// Fetches data from the Flask backend '/data' endpoint and processes it for the charts
 async function fetchData() {
-    const response = await fetch('/data');
-    const data = await response.json();
+    const response = await fetch('/data'); // Request data from Flask backend
+    const data = await response.json(); // Parse the JSON response
 
+    // Arrays to hold chart data
     const labels = [];
     const coinonePrices = [];
     const bitvavoPrices = [];
     const premiums = [];
 
+    // Extract relevant fields from each row of data
     data.forEach(row => {
-        labels.push(row.timestamp); // Adjust if your CSV header is different
-        coinonePrices.push(parseFloat(row.coinone_btc_krw));
-        bitvavoPrices.push(parseFloat(row.bitvavo_btc_krw));
-        premiums.push(parseFloat(row.kimchi_premium_percent));
+        labels.push(row.timestamp); // X-axis: time
+        coinonePrices.push(parseFloat(row.coinone_btc_krw)); // Coinone BTC price
+        bitvavoPrices.push(parseFloat(row.bitvavo_btc_krw)); // Bitvavo BTC price
+        premiums.push(parseFloat(row.kimchi_premium_percent)); // Kimchi Premium %
     });
 
+    // Return processed arrays for charting
     return { labels, coinonePrices, bitvavoPrices, premiums };
 }
 
+// Initializes both the line chart and bar chart, and sets up periodic updates
 const initCharts = async () => {
+    // Get the 2D drawing contexts for both canvas elements
     const ctxLine = document.getElementById('priceChart').getContext('2d');
     const ctxBar = document.getElementById('premiumChart').getContext('2d');
 
+    // Create the line chart for BTC prices
     const lineChart = new Chart(ctxLine, {
         type: 'line',
         data: {
-            labels: [],
+            labels: [], // Timestamps
             datasets: [
                 {
                     label: 'Coinone BTC (KRW)',
@@ -49,6 +55,7 @@ const initCharts = async () => {
         }
     });
 
+    // Create the bar chart for Korean Premium %
     const barChart = new Chart(ctxBar, {
         type: 'bar',
         data: {
@@ -70,6 +77,7 @@ const initCharts = async () => {
         }
     });
 
+    // Fetches new data and updates both charts
     async function updateCharts() {
         const { labels, coinonePrices, bitvavoPrices, premiums } = await fetchData();
         // Update line chart
@@ -84,8 +92,9 @@ const initCharts = async () => {
         barChart.update();
     }
 
-    await updateCharts();
+    await updateCharts(); // Initial chart update on page load
     setInterval(updateCharts, 60000); // Update every minute
 };
 
+// Run initCharts when the page finishes loading
 document.addEventListener('DOMContentLoaded', initCharts);
