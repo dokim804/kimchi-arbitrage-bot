@@ -19,7 +19,7 @@ async function fetchData() {
 }
 
 const initChart = async () => {
-    const ctx = document.getElementById('myChart').getContext('2d');
+    const ctx = document.getElementById('priceChart').getContext('2d');
     const chart = new Chart(ctx, {
         type: 'line',
         data: {
