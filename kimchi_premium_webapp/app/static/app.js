@@ -55,7 +55,7 @@ const initCharts = async () => {
             labels: [],
             datasets: [
                 {
-                    label: 'Kimchi Premium (%)',
+                    label: 'Korean Premium (%)',
                     backgroundColor: 'rgba(75, 192, 192, 0.5)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     data: [],
