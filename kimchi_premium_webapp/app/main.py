@@ -1,6 +1,11 @@
 from flask import Flask, render_template, jsonify
 import pandas as pd
 import os
+import io
+from azure.storage.blob import BlobServiceClient
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
