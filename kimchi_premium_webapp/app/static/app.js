@@ -18,9 +18,11 @@ async function fetchData() {
     return { labels, coinonePrices, bitvavoPrices, premiums };
 }
 
-const initChart = async () => {
-    const ctx = document.getElementById('priceChart').getContext('2d');
-    const chart = new Chart(ctx, {
+const initCharts = async () => {
+    const ctxLine = document.getElementById('priceChart').getContext('2d');
+    const ctxBar = document.getElementById('premiumChart').getContext('2d');
+
+    const lineChart = new Chart(ctxLine, {
         type: 'line',
         data: {
             labels: [],
@@ -36,11 +38,26 @@ const initChart = async () => {
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     data: [],
-                },
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: false }
+            }
+        }
+    });
+
+    const barChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [
                 {
                     label: 'Kimchi Premium (%)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
                     borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     data: [],
                 }
             ]
@@ -48,24 +65,27 @@ const initChart = async () => {
         options: {
             responsive: true,
             scales: {
-                y: {
-                    beginAtZero: true
-                }
+                y: { beginAtZero: true }
             }
         }
     });
 
-    async function updateChart() {
+    async function updateCharts() {
         const { labels, coinonePrices, bitvavoPrices, premiums } = await fetchData();
-        chart.data.labels = labels;
-        chart.data.datasets[0].data = coinonePrices;
-        chart.data.datasets[1].data = bitvavoPrices;
-        chart.data.datasets[2].data = premiums;
-        chart.update();
+        // Update line chart
+        lineChart.data.labels = labels;
+        lineChart.data.datasets[0].data = coinonePrices;
+        lineChart.data.datasets[1].data = bitvavoPrices;
+        lineChart.update();
+
+        // Update bar chart
+        barChart.data.labels = labels;
+        barChart.data.datasets[0].data = premiums;
+        barChart.update();
     }
 
-    await updateChart();
-    setInterval(updateChart, 60000); // Update every minute
+    await updateCharts();
+    setInterval(updateCharts, 60000); // Update every minute
 };
 
-document.addEventListener('DOMContentLoaded', initChart);
+document.addEventListener('DOMContentLoaded', initCharts);
