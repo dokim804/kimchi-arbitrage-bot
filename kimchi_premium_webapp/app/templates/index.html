@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimchi Premium Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <div>
+        <h1>Kimchi Premium Tracker</h1>
+        <canvas id="priceChart" width="400" height="200"></canvas>
+    </div>
+    <script>
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        const priceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [], // Time labels will be populated dynamically
+                datasets: [
+                    {
+                        label: 'Coinone BTC (KRW)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        data: [],
+                    },
+                    {
+                        label: 'Bitvavo BTC (KRW)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        data: [],
+                    },
+                    {
+                        label: 'Kimchi Premium (%)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        data: [],
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'minute'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Function to fetch data from Azure Blob Storage
+        async function fetchData() {
+            const response = await fetch('URL_TO_YOUR_AZURE_BLOB_STORAGE/korean_premium_log.csv');
+            const data = await response.text();
+            const rows = data.split('\n').slice(1); // Skip header
+
+            const labels = [];
+            const coinonePrices = [];
+            const bitvavoPrices = [];
+            const premiums = [];
+
+            rows.forEach(row => {
+                const cols = row.split(',');
+                if (cols.length === 6) {
+                    labels.push(cols[0]); // Timestamp
+                    coinonePrices.push(parseFloat(cols[1])); // Coinone BTC (KRW)
+                    bitvavoPrices.push(parseFloat(cols[4])); // Bitvavo BTC (KRW)
+                    premiums.push(parseFloat(cols[5])); // Kimchi Premium (%)
+                }
+            });
+
+            // Update chart data
+            priceChart.data.labels = labels;
+            priceChart.data.datasets[0].data = coinonePrices;
+            priceChart.data.datasets[1].data = bitvavoPrices;
+            priceChart.data.datasets[2].data = premiums;
+            priceChart.update();
+        }
+
+        // Fetch data every minute
+        setInterval(fetchData, 60000);
+        fetchData(); // Initial fetch
+    </script>
+</body>
+</html>
