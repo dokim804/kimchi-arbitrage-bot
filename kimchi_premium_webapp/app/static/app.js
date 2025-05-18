@@ -9,50 +9,16 @@ async function fetchData() {
     const premiums = [];
 
     data.forEach(row => {
-        labels.push(row.timestamp);
+        labels.push(row.timestamp); // Adjust if your CSV header is different
         coinonePrices.push(parseFloat(row.coinone_btc_krw));
         bitvavoPrices.push(parseFloat(row.bitvavo_btc_krw));
         premiums.push(parseFloat(row.kimchi_premium_percent));
     });
 
-    priceChart.data.labels = labels;
-    priceChart.data.datasets[0].data = coinonePrices;
-    priceChart.data.datasets[1].data = bitvavoPrices;
-    priceChart.data.datasets[2].data = premiums;
-    priceChart.update();
+    return { labels, coinonePrices, bitvavoPrices, premiums };
 }
 
-// Fetch data from the server and update the chart
-const parseCSV = (data) => {
-    const rows = data.split('\n').slice(1);
-    const coinoneBtcKrw = [];
-    const bitvavoBtcKrw = [];
-    const kimchiPremiumPercent = [];
-    const timestamps = [];
-
-    rows.forEach(row => {
-        const columns = row.split(',');
-        if (columns.length === 6) {
-            timestamps.push(columns[0]);
-            coinoneBtcKrw.push(parseFloat(columns[1]));
-            bitvavoBtcKrw.push(parseFloat(columns[4]));
-            kimchiPremiumPercent.push(parseFloat(columns[5]));
-        }
-    });
-
-    return { timestamps, coinoneBtcKrw, bitvavoBtcKrw, kimchiPremiumPercent };
-};
-
-const updateChart = async (chart) => {
-    const { timestamps, coinoneBtcKrw, bitvavoBtcKrw, kimchiPremiumPercent } = await fetchData();
-    chart.data.labels = timestamps;
-    chart.data.datasets[0].data = coinoneBtcKrw;
-    chart.data.datasets[1].data = bitvavoBtcKrw;
-    chart.data.datasets[2].data = kimchiPremiumPercent;
-    chart.update();
-};
-
-const initChart = () => {
+const initChart = async () => {
     const ctx = document.getElementById('myChart').getContext('2d');
     const chart = new Chart(ctx, {
         type: 'line',
@@ -89,7 +55,17 @@ const initChart = () => {
         }
     });
 
-    setInterval(() => updateChart(chart), 60000); // Update every minute
+    async function updateChart() {
+        const { labels, coinonePrices, bitvavoPrices, premiums } = await fetchData();
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = coinonePrices;
+        chart.data.datasets[1].data = bitvavoPrices;
+        chart.data.datasets[2].data = premiums;
+        chart.update();
+    }
+
+    await updateChart();
+    setInterval(updateChart, 60000); // Update every minute
 };
 
 document.addEventListener('DOMContentLoaded', initChart);
