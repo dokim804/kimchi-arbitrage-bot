@@ -97,4 +97,4 @@ const initCharts = async () => {
 };
 
 // Run initCharts when the page finishes loading
-document.addEventListener('DOMContentLoaded', initCharts);
+initCharts();
