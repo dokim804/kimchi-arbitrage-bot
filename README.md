@@ -14,9 +14,8 @@ A real-time Bitcoin arbitrage simulator that calculates potential profit and ROI
 
 The Korean crypto market often shows a higher BTC price than Western markets. This app simulates an arbitrage trade to exploit that price gap and calculate:
 
-- 💰 Estimated profit and ROI
-- 🔄 Real-world transfer costs (Conversion fees, trading fees, BTC network fees, market slippage)
-- ⛓️ Estimated time delays
+- 💰 Estimated profit and ROI, using arbitrage flow and real-world transfer costs for each step of the flow (Conversion fees, trading fees, BTC network fees, market slippage)
+- ⛓️ Estimated time delays to gauge realized profit change
 
 This project is part of my data science portfolio and showcases real-time data integration, financial modeling, and full-stack development.
 
@@ -35,7 +34,7 @@ This project is part of my data science portfolio and showcases real-time data i
 
 | Frontend | Backend | Logic | Hosting |
 |----------|---------|-------|---------|
-| HTML, CSS, JavaScript | Flask | Custom simulation engine (JavaScript) | Azure Web Apps |
+| HTML, CSS, JavaScript | Python, Flask | Custom simulation engine (JavaScript) | Azure Web Apps |
 
 ---
 
@@ -45,15 +44,6 @@ This project is part of my data science portfolio and showcases real-time data i
 
 ---
 
-## 🔁 Arbitrage Flow
-
-```text
-1. Convert KRW to EUR via Wise (with 0.4% fee, FX spread already included in Wise conversion rate)
-2. Deposit EUR into Bitvavo (no fee)
-3. Buy BTC on Bitvavo (0.25% fee + 0.3% slippage)
-4. Transfer BTC from Bitvavo to CoinOne (0.0005 BTC + 0.0001 BTC network fee)
-5. Sell BTC on CoinOne (0.1% fee + 0.2% slippage)
-
 ## 🛠️ Local Setup
 
 ```bash
@@ -62,17 +52,14 @@ git clone https://github.com/yourusername/korean-premium-arbitrage-bot.git
 cd korean-premium-arbitrage-bot
 
 # Install dependencies
-npm install         # For JavaScript backend
-# OR
 pip install -r requirements.txt  # For Python backend
 
 # Start the app
-npm start
-# OR
 flask run
 
 # Open in browser
-http://localhost:3000
+http://localhost:5000
+```
 
 ## 📈 Planned Improvements
 
