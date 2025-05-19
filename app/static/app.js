@@ -1,39 +1,40 @@
-// Fetches data from the Flask backend '/data' endpoint and processes it for the charts
+let lineChartInstance = null;
+let barChartInstance = null;
+
 async function fetchData() {
     const response = await fetch('/data');
     const data = await response.json();
-    // Arrays to hold chart data
     const labels = [];
     const coinonePrices = [];
     const bitvavoPrices = [];
     const premiums = [];
-
-    // Extract relevant fields from each row of data
     data.forEach(row => {
         labels.push(row.timestamp || row.date || '');
         coinonePrices.push(row.coinone_btc_krw);
         bitvavoPrices.push(row.bitvavo_btc_krw);
-        premiums.push(row.kimchi_premium);
+        premiums.push(row.kimchi_premium_percent);
     });
-
-    // Return processed arrays for charting
     return { labels, coinonePrices, bitvavoPrices, premiums };
 }
 
-// Initializes both the line chart and bar chart, and sets up periodic updates
 const initCharts = async () => {
-    // Get the 2D drawing contexts for both canvas elements
     const priceChartElem = document.getElementById('priceChart');
     const premiumChartElem = document.getElementById('premiumChart');
-    if (!priceChartElem || !premiumChartElem) return; // Don't run if canvases aren't present
+    if (!priceChartElem || !premiumChartElem) return;
 
     const ctxLine = priceChartElem.getContext('2d');
     const ctxBar = premiumChartElem.getContext('2d');
-
     const { labels, coinonePrices, bitvavoPrices, premiums } = await fetchData();
 
-    // Create the line chart for BTC prices
-    new Chart(ctxLine, {
+    // Destroy previous charts if they exist
+    if (lineChartInstance) {
+        lineChartInstance.destroy();
+    }
+    if (barChartInstance) {
+        barChartInstance.destroy();
+    }
+
+    lineChartInstance = new Chart(ctxLine, {
         type: 'line',
         data: {
             labels: labels,
@@ -67,8 +68,7 @@ const initCharts = async () => {
         }
     });
 
-    // Create the bar chart for Kimchi Premium %
-    new Chart(ctxBar, {
+    barChartInstance = new Chart(ctxBar, {
         type: 'bar',
         data: {
             labels: labels,
@@ -94,5 +94,4 @@ const initCharts = async () => {
     });
 };
 
-// Run initCharts when the script is loaded (after canvases are present)
 initCharts();
