@@ -58,10 +58,10 @@ async function runSimulation() {
 
     document.getElementById('simulationResults').innerHTML = `
         <h2>Simulation Results</h2>
-        <p><b>Step 1:</b> Send ${krwAmount.toLocaleString()} KRW via Wise with real-time conversion rate (fee: ${wiseFee.toLocaleString()} KRW) → <b>${eurReceived.toFixed(2)} EUR</b></p>
-        <p><b>Step 2:</b> Deposit to Bitvavo (fee: ${bitvavoDepositFee} EUR) → <b>${eurAfterDeposit.toFixed(2)} EUR</b></p>
-        <p><b>Step 3:</b> Buy BTC at ${bitvavoBtcPrice.toLocaleString()} EUR/BTC (fee: ${bitvavoBuyFeePercent}%) → <b>${btcBought.toFixed(6)} BTC</b></p>
-        <p><b>Step 4:</b> Withdraw BTC to CoinOne (fee: ${bitvavoWithdrawFeeBtc} BTC) → <b>${btcAfterWithdraw.toFixed(6)} BTC</b></p>
+        <p><b>Step 1:</b> Convert ${krwAmount.toLocaleString()} KRW to EUR via Wise with real-time conversion rate (fee: ${wiseFee.toLocaleString()} KRW) → <b>${eurReceived.toFixed(2)} EUR</b></p>
+        <p><b>Step 2:</b> Deposit EUR to Bitvavo (fee: ${bitvavoDepositFee} EUR) → <b>${eurAfterDeposit.toFixed(2)} EUR</b></p>
+        <p><b>Step 3:</b> Buy BTC on Bitvavo at ${bitvavoBtcPrice.toLocaleString()} EUR/BTC (fee: ${bitvavoBuyFeePercent}%) → <b>${btcBought.toFixed(6)} BTC</b></p>
+        <p><b>Step 4:</b> Transfer BTC from Bitvavo to CoinOne (fee: ${bitvavoWithdrawFeeBtc} BTC) → <b>${btcAfterWithdraw.toFixed(6)} BTC</b></p>
         <p><b>Step 5:</b> Sell BTC on CoinOne at ${coinoneSellPrice.toLocaleString()} KRW/BTC (fee: ${coinoneSellFeePercent}%) → <b>${krwFromSale.toLocaleString()} KRW</b></p>
     `;
 }
