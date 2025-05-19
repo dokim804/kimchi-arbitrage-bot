@@ -40,6 +40,8 @@
         .centered { text-align: center; }
         .hidden { display: none; }
     </style>
+    <!-- Chart.js for dashboard tab -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -55,7 +57,10 @@
                 Track the <b>Kimchi Premium</b>—the price difference of Bitcoin between Korean and global exchanges—and simulate real-world arbitrage opportunities.
             </p>
             <p>
-                The Korean crypto market often shows a higher BTC price than Western markets. This website lets you:
+                The Korean crypto market often shows a higher BTC price than Western markets. The Kimchi Premium exists due to strict capital controls in South Korea, which make cross-border transfers difficult and limit arbitrage opportunities. Strong local demand and restricted access to Korean exchanges—especially for foreigners—further isolate the market, allowing Bitcoin prices in Korea to remain higher than global averages.
+            </p>
+            <p>
+                This website lets you:
             </p>
             <ul>
                 <li>
@@ -65,7 +70,7 @@
                     <b>Simulate an arbitrage trade</b> step-by-step, including all realistic fees, slippage, and transfer times, to estimate your potential profit and ROI. Provide your investment amount and click "Simulate" to see the results.
                 </li>
                 <li>
-                    <b>Get alerts for high korean premium</b>—Sign up for email notifications when the Kimchi Premium exceeds a certain threshold. This feature is currently under development.
+                    <b>Get alerts for high Korean premium</b>—Sign up for email notifications when the Kimchi Premium exceeds a certain threshold. This feature is currently under development.
                 </li>
             </ul>
         </div>
