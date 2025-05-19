@@ -17,7 +17,7 @@ async function fetchData() {
     return { labels, coinonePrices, bitvavoPrices, premiums };
 }
 
-const initCharts = async () => {
+window.initCharts = async () => {
     const priceChartElem = document.getElementById('priceChart');
     const premiumChartElem = document.getElementById('premiumChart');
     if (!priceChartElem || !premiumChartElem) return;
@@ -29,9 +29,11 @@ const initCharts = async () => {
     // Destroy previous charts if they exist
     if (lineChartInstance) {
         lineChartInstance.destroy();
+        lineChartInstance = null;
     }
     if (barChartInstance) {
         barChartInstance.destroy();
+        barChartInstance = null;
     }
 
     lineChartInstance = new Chart(ctxLine, {
@@ -93,5 +95,3 @@ const initCharts = async () => {
         }
     });
 };
-
-initCharts();

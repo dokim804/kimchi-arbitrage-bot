@@ -119,13 +119,16 @@
                         script.id = 'simulation-js';
                         document.body.appendChild(script);
                     }
-                    // If dashboard tab, reload its JS
+                    // If dashboard tab, reload its JS and call initCharts
                     if (tab === 'dashboard') {
                         const oldScript = document.getElementById('dashboard-js');
                         if (oldScript) oldScript.remove();
                         const script = document.createElement('script');
                         script.src = '/static/app.js';
                         script.id = 'dashboard-js';
+                        script.onload = () => {
+                            if (window.initCharts) window.initCharts();
+                        };
                         document.body.appendChild(script);
                     }
                 });
