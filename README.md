@@ -1,64 +1,103 @@
-# Korean Premmium Arbitrage Bot
+# 🪙 Korean Premium Arbitrage Bot
 
-## 1. Goal
+![Status](https://img.shields.io/badge/status-live-brightgreen)
+![Tech](https://img.shields.io/badge/built_with-JavaScript%20%7C%20Python-blue)
+![Hosted](https://img.shields.io/badge/hosted_on-Azure-lightblue)
 
-To build a real-time arbitrage monitor for Bitcoin price differences across the EU and Korean exchanges. The goal is to identify and potentially execute profitable trades that exploit the Kimchi Premium.
+A real-time Bitcoin arbitrage simulator that calculates potential profit and ROI between Korean and European crypto exchanges, based on the infamous **"Kimchi Premium"** — the price difference in BTC between markets.
 
-## 2. Motivation
+🔗 **Live App**: [Korean Premium Arbitrage Bot](https://korean-premium-arbitrage-bot-ard3fnductawgmh0.koreasouth-01.azurewebsites.net/)
 
-This is not just a data science project — it’s a real-world opportunity to validate whether crypto arbitrage is feasible today, considering regulatory, FX, timing, and operational constraints.
+---
 
-## 3. Features
+## 💡 Project Overview
 
-- Real-time Bitcoin price tracking from Coinone (Korean exchange) and Bitvavo (Europpean exchange)
-- Live FX rate integration for KRW ↔ EUR
-- Automated alerts when arbitrage exceeds X%
-- Cost modeling for all stages of arbitrage
-- Profitability simulation with ROI calculations
+The Korean crypto market often shows a higher BTC price than Western markets. This app simulates an arbitrage trade to exploit that price gap and calculate:
 
-## 4. Web Application Features
+- 💰 Estimated profit and ROI
+- 🔄 Real-world transfer costs (Conversion fees, trading fees, BTC network fees, market slippage)
+- ⛓️ Estimated time delays
 
-- Real-time line graph displaying:
-  - Coinone BTC price in KRW
-  - Bitvavo BTC price in KRW
-- Bar chart displaying:
-  - Kimchi Premium percentage over time
-- Data fetched from Azure Blob Storage
-- Responsive and user-friendly interface
+This project is part of my data science portfolio and showcases real-time data integration, financial modeling, and full-stack development.
 
-## 5. Setup Instructions (Web App)
+---
 
-1. **Clone the repository:**
+## 🚀 Features
 
-   ```sh
-   git clone https://github.com/dokim804/kimchi-arbitrage-bot/tree/main
-   cd kimchi_premium_arbitrage_bot
-   ```
+- ✅ Real-time BTC prices from Bitvavo (EUR) and CoinOne (KRW)
+- ✅ Simulation of arbitrage steps with realistic fee structure
+- ✅ Clean, responsive UI with dynamic ROI calculation
+- ✅ Fully deployed and accessible via Azure
 
-2. **Install dependencies:**
+---
 
-   ```sh
-   pip install -r requirements.txt
-   ```
+## 📊 Tech Stack
 
-3. **Run the application locally:**
+| Frontend | Backend | Logic | Hosting |
+|----------|---------|-------|---------|
+| HTML, CSS, JavaScript | Flask | Custom simulation engine (JavaScript) | Azure Web Apps |
 
-   ```sh
-   python app/main.py
-   ```
+---
 
-Then open your browser to http://localhost:5000.
+## 📸 Screenshots
 
-## 6. Deployment (Azure App Service)
+![Simulation UI](./screenshots/simulation-ui.png)
 
-Deploy the repository root to Azure App Service.
-Set the startup command to:
+---
 
-   ```sh
-   gunicorn app.main:app
-   ```
+## 🔁 Arbitrage Flow
 
-## 7. License
+```text
+1. Convert KRW to EUR via Wise (with 0.4% fee, FX spread already included in Wise conversion rate)
+2. Deposit EUR into Bitvavo (no fee)
+3. Buy BTC on Bitvavo (0.25% fee + 0.3% slippage)
+4. Transfer BTC from Bitvavo to CoinOne (0.0005 BTC + 0.0001 BTC network fee)
+5. Sell BTC on CoinOne (0.1% fee + 0.2% slippage)
 
-This project is licensed under the MIT License. See the LICENSE file for details.
-Set your environment variable AZURE_STORAGE_CONNECTION_STRING in the Azure portal.
+## 🛠️ Local Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/korean-premium-arbitrage-bot.git
+cd korean-premium-arbitrage-bot
+
+# Install dependencies
+npm install         # For JavaScript backend
+# OR
+pip install -r requirements.txt  # For Python backend
+
+# Start the app
+npm start
+# OR
+flask run
+
+# Open in browser
+http://localhost:3000
+
+## 📈 Planned Improvements
+
+- [ ] Dynamic fee updates with API integration or user input
+- [ ] SMS/email alerts when arbitrage becomes profitable
+
+---
+
+## 🧠 What I Learned
+
+- Real-world financial models must account for friction: FX spreads, network fees, slippage, and transfer delays
+- Built experience working with asynchronous APIs and real-time data ingestion
+- Learned to deploy and maintain full-stack applications using Azure
+- Developed deeper understanding of crypto markets and cross-border finance
+
+---
+
+## 🤝 Contact
+
+**Author:** Your Name  
+📫 dokim804@gmail.com
+🔗 [LinkedIn](https://www.linkedin.com/in/dayu-kim-327002ba/)
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](./LICENSE)
