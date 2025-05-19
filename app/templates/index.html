@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+    <style>
+    .top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    }
+    </style>
 </head>
 <body>
 <div>
@@ -14,6 +21,9 @@
     <canvas id="priceChart" width="400" height="200"></canvas>
     <h2>Korean Premium (%) Over Time</h2>
     <canvas id="premiumChart" width="400" height="200"></canvas>
+</div>
+<div class="top-right">
+    <button onclick="window.location.href='/simulation'">Profitability Simulation</button>
 </div>
 </body>
 </html>
