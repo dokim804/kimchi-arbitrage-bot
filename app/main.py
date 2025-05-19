@@ -34,8 +34,8 @@ def data():
     # Return all rows as a list of dicts
     return jsonify(df.to_dict(orient='records'))
 
-@app.route('/api/latest-bitvavo-price')
-def latest_bitvavo_price():
+@app.route('/api/latest-bitvavo-eur-price')
+def latest_bitvavo_eur_price():
     # Fetch the CSV file from Azure Blob Storage (reuse logic)
     blob_service_client = BlobServiceClient.from_connection_string(AZURE_CONNECTION_STRING)
     blob_client = blob_service_client.get_blob_client(container=CONTAINER_NAME, blob=BLOB_NAME)
@@ -48,7 +48,7 @@ def latest_bitvavo_price():
     df = pd.read_csv(io.StringIO(data))
 
     # Get the latest bitvavo_btc_krw price (last row)
-    latest_price = float(df['bitvavo_btc_krw'].iloc[-1])
+    latest_price = float(df['bitvavo_btc_eur'].iloc[-1])
 
     return jsonify({'latest_bitvavo_price': latest_price})
 
