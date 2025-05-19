@@ -46,7 +46,7 @@ async function runSimulation() {
 
 
     // Results
-    const profit = krwFromSale - krwAmount;
+    const profit = Math.round(krwFromSale - krwAmount);
     const roi = (profit / krwAmount) * 100;
 
     document.getElementById('profitSummary').innerHTML = `
