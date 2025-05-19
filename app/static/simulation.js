@@ -50,9 +50,9 @@ async function runSimulation() {
     const roi = (profit / krwAmount) * 100;
 
     document.getElementById('profitSummary').innerHTML = `
-        <div style="text-align:center;">
-            <span style="font-size:2em;"><b>Profit: ${profit.toLocaleString()} KRW</b></span><br>
-            <span style="font-size:1.5em;"><b>ROI: ${roi.toFixed(2)}%</b></span>
+        <div style="display:inline-block; border:2px solid #4CAF50; border-radius:12px; padding:24px 40px; background:#f8fff8; box-shadow:0 2px 8px #eee; margin-top:10px;">
+            <div style="font-size:2em; font-weight:bold;">Profit: ${profit.toLocaleString()} KRW</div>
+            <div style="font-size:2em; font-weight:bold; margin-top:8px;">ROI: ${roi.toFixed(2)}%</div>
         </div>
     `;
 
