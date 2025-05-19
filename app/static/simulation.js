@@ -2,14 +2,22 @@
 const wiseRate = 0.00068; // 1 KRW = 0.00068 EUR
 const wiseFee = 5000; // 5,000 KRW fee
 const bitvavoDepositFee = 0; // 0 EUR
-const bitvavoBtcPrice = 60000; // 1 BTC = 60,000 EUR
 const bitvavoBuyFeePercent = 0.25; // 0.25%
 const bitvavoWithdrawFeeBtc = 0.0005; // 0.0005 BTC
 const coinoneSellPrice = 147000000; // 1 BTC = 147,000,000 KRW
 const coinoneSellFeePercent = 0.1; // 0.1%
 
-function runSimulation() {
+async function getLatestBitvavoPrice() {
+    const response = await fetch('/api/latest-bitvavo-price');
+    const data = await response.json();
+    return data.latest_bitvavo_price;
+}
+
+async function runSimulation() {
     const krwAmount = parseFloat(document.getElementById('krwAmount').value);
+
+    // Fetch the latest Bitvavo BTC price
+    const bitvavoBtcPrice = await getLatestBitvavoPrice();
 
     // Step 1: Wise conversion
     const krwAfterWiseFee = krwAmount - wiseFee;
