@@ -23,6 +23,21 @@
             font-size: 1.1em;
             color: #333;
         }
+        /* Fix Notes column width */
+        .notes-col {
+            width: 250px;
+            min-width: 180px;
+            max-width: 250px;
+            word-break: break-word;
+        }
+        /* Left-align explanation blocks */
+        .explanation-block {
+            max-width: 700px;
+            margin: 20px auto;
+            font-size: 1em;
+            color: #444;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -44,7 +59,7 @@
                     <th style="border:1px solid #ccc; padding:8px;">Description</th>
                     <th style="border:1px solid #ccc; padding:8px;">Fee/Rate</th>
                     <th style="border:1px solid #ccc; padding:8px;">⏱️ Estimated Time</th>
-                    <th style="border:1px solid #ccc; padding:8px;">📘 Notes</th>
+                    <th class="notes-col" style="border:1px solid #ccc; padding:8px;">📘 Notes</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,39 +68,39 @@
                     <td style="border:1px solid #ccc; padding:8px;">Convert KRW → EUR via Wise</td>
                     <td style="border:1px solid #ccc; padding:8px;">5,000 KRW + ~0.4% FX spread</td>
                     <td style="border:1px solid #ccc; padding:8px;">0.5 – 2 hours</td>
-                    <td style="border:1px solid #ccc; padding:8px;">Wise is generally fast, but cross-border KRW → EUR transfers may take longer due to banking hours or compliance checks</td>
+                    <td class="notes-col" style="border:1px solid #ccc; padding:8px;">Wise is generally fast, but cross-border KRW → EUR transfers may take longer due to banking hours or compliance checks</td>
                 </tr>
                 <tr>
                     <td style="border:1px solid #ccc; padding:8px;">2</td>
                     <td style="border:1px solid #ccc; padding:8px;">Deposit EUR to Bitvavo</td>
                     <td style="border:1px solid #ccc; padding:8px;">0 EUR</td>
                     <td style="border:1px solid #ccc; padding:8px;">Instant – 1 hour</td>
-                    <td style="border:1px solid #ccc; padding:8px;">If you deposit from a supported EU bank using SEPA Instant, it's often immediate; otherwise, same-day</td>
+                    <td class="notes-col" style="border:1px solid #ccc; padding:8px;">If you deposit from a supported EU bank using SEPA Instant, it's often immediate; otherwise, same-day</td>
                 </tr>
                 <tr>
                     <td style="border:1px solid #ccc; padding:8px;">3</td>
                     <td style="border:1px solid #ccc; padding:8px;">Buy BTC with EUR</td>
                     <td style="border:1px solid #ccc; padding:8px;">0.25% fee + 0.3% slippage</td>
                     <td style="border:1px solid #ccc; padding:8px;">Seconds – 2 minutes</td>
-                    <td style="border:1px solid #ccc; padding:8px;">Market buy orders execute almost instantly, but APIs/UI lag or rate limits could slow this slightly</td>
+                    <td class="notes-col" style="border:1px solid #ccc; padding:8px;">Market buy orders execute almost instantly, but APIs/UI lag or rate limits could slow this slightly</td>
                 </tr>
                 <tr>
                     <td style="border:1px solid #ccc; padding:8px;">4</td>
                     <td style="border:1px solid #ccc; padding:8px;">Withdraw BTC to CoinOne</td>
                     <td style="border:1px solid #ccc; padding:8px;">0.0005 BTC + 0.0001 BTC network fee</td>
                     <td style="border:1px solid #ccc; padding:8px;">30 – 60 minutes</td>
-                    <td style="border:1px solid #ccc; padding:8px;">BTC transfers require confirmations (usually 1–3) before CoinOne credits your account. Time varies with network fee and congestion</td>
+                    <td class="notes-col" style="border:1px solid #ccc; padding:8px;">BTC transfers require confirmations (usually 1–3) before CoinOne credits your account. Time varies with network fee and congestion</td>
                 </tr>
                 <tr>
                     <td style="border:1px solid #ccc; padding:8px;">5</td>
                     <td style="border:1px solid #ccc; padding:8px;">Sell BTC on CoinOne</td>
                     <td style="border:1px solid #ccc; padding:8px;">0.1% fee + 0.2% slippage</td>
                     <td style="border:1px solid #ccc; padding:8px;">Seconds – 2 minutes</td>
-                    <td style="border:1px solid #ccc; padding:8px;">Like the buy side, this is fast assuming market liquidity and minimal slippage</td>
+                    <td class="notes-col" style="border:1px solid #ccc; padding:8px;">Like the buy side, this is fast assuming market liquidity and minimal slippage</td>
                 </tr>
             </tbody>
         </table>
-        <div style="max-width:700px; margin:20px auto; text-align:left; font-size:1em; color:#444;">
+        <div class="explanation-block">
             <p><b>Estimated Total Time:</b> 2–5 hours</p>
             <p>⚠️ Times may vary due to banking hours, BTC network congestion, and FX transfer compliance.</p>
             <p><b>Why does execution time matter?</b><br>
@@ -93,7 +108,7 @@
         </div>
     </div>
 
-    <div style="max-width:700px; margin:20px auto; text-align:left; font-size:1em; color:#444;">
+    <div class="explanation-block">
         <p><b>🏦 What Is an FX Spread?</b><br>
         When you exchange currencies (e.g. KRW → EUR), you're given an exchange rate. But this rate isn’t always the real “mid-market rate” — it includes a markup added by the currency exchange service (like Wise, banks, or credit cards). That markup is called the FX spread.</p>
         <p><b>✅ What is slippage?</b><br>
@@ -101,6 +116,7 @@
         <p><b>⚠️ Estimated BTC transfer time:</b> 45 minutes (may vary with network conditions)</p>
     </div>
 
+    <h2 class="centered" style="margin-top:50px;">Run Simulation</h2>
     <form id="simForm" class="centered">
         <label for="krwAmount">Amount to Arbitrage (KRW):</label>
         <input type="number" id="krwAmount" value="1000000" min="10000" step="10000">
