@@ -2,61 +2,45 @@
 <html>
 <head>
     <title>Profitability Simulation</title>
+    <style>
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .centered {
+            text-align: center;
+        }
+        .large-font {
+            font-size: 2em;
+        }
+        .medium-font {
+            font-size: 1.5em;
+        }
+        .explanation {
+            max-width: 700px;
+            margin: 20px auto;
+            font-size: 1.1em;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Profitability Simulation</h1>
-    <form id="simForm">
+    <div class="top-right">
+        <button onclick="window.location.href='/'">Back to Dashboard</button>
+    </div>
+    <h1 class="centered">Profitability Simulation</h1>
+    <div class="explanation centered">
+        This simulation takes into account the current up-to-date Bitcoin prices in two different platforms (European vs Korean), and returns profit & ROI with given arbitrage amount. Put the amount of money you'd like to use for the arbitrage transaction.<br><br>
+        The scenario is that you send KRW from a Korean account to buy Bitcoins on a European Bitcoin platform. For this, you need to transfer money from Korean to European account. Afterwards, you will transfer Bitcoin from the European to the Korean Bitcoin platform, sell it, and make profit. Below shows how much profit and ROI you can expect, and a breakdown of each arbitrage transaction step and how it affects your profitability.
+    </div>
+    <form id="simForm" class="centered">
         <label for="krwAmount">Amount to Arbitrage (KRW):</label>
         <input type="number" id="krwAmount" value="1000000" min="10000" step="10000">
         <button type="button" onclick="runSimulation()">Simulate</button>
     </form>
-    <div id="simulationResults"></div>
-    <button onclick="window.location.href='/'">Back to Dashboard</button>
-    <script>
-        // Hardcoded example values
-        const wiseRate = 0.00068; // 1 KRW = 0.00068 EUR
-        const wiseFee = 5000; // 5,000 KRW fee
-        const bitvavoDepositFee = 0; // 0 EUR
-        const bitvavoBtcPrice = 60000; // 1 BTC = 60,000 EUR
-        const bitvavoBuyFeePercent = 0.25; // 0.25%
-        const bitvavoWithdrawFeeBtc = 0.0005; // 0.0005 BTC
-        const coinoneSellPrice = 147000000; // 1 BTC = 147,000,000 KRW
-        const coinoneSellFeePercent = 0.1; // 0.1%
-
-        function runSimulation() {
-            const krwAmount = parseFloat(document.getElementById('krwAmount').value);
-
-            // Step 1: Wise conversion
-            const krwAfterWiseFee = krwAmount - wiseFee;
-            const eurReceived = krwAfterWiseFee * wiseRate;
-
-            // Step 2: Bitvavo deposit (no fee)
-            const eurAfterDeposit = eurReceived - bitvavoDepositFee;
-
-            // Step 3: Buy BTC on Bitvavo
-            const btcBought = (eurAfterDeposit / bitvavoBtcPrice) * (1 - bitvavoBuyFeePercent / 100);
-
-            // Step 4: Withdraw BTC from Bitvavo
-            const btcAfterWithdraw = btcBought - bitvavoWithdrawFeeBtc;
-
-            // Step 5: Sell BTC on CoinOne
-            const krwFromSale = btcAfterWithdraw * coinoneSellPrice * (1 - coinoneSellFeePercent / 100);
-
-            // Results
-            const profit = krwFromSale - krwAmount;
-            const roi = (profit / krwAmount) * 100;
-
-            document.getElementById('simulationResults').innerHTML = `
-                <h2>Simulation Results</h2>
-                <p><b>Step 1:</b> Send ${krwAmount.toLocaleString()} KRW via Wise (fee: ${wiseFee.toLocaleString()} KRW) → <b>${eurReceived.toFixed(2)} EUR</b></p>
-                <p><b>Step 2:</b> Deposit to Bitvavo (fee: ${bitvavoDepositFee} EUR) → <b>${eurAfterDeposit.toFixed(2)} EUR</b></p>
-                <p><b>Step 3:</b> Buy BTC at ${bitvavoBtcPrice.toLocaleString()} EUR/BTC (fee: ${bitvavoBuyFeePercent}%) → <b>${btcBought.toFixed(6)} BTC</b></p>
-                <p><b>Step 4:</b> Withdraw BTC (fee: ${bitvavoWithdrawFeeBtc} BTC) → <b>${btcAfterWithdraw.toFixed(6)} BTC</b></p>
-                <p><b>Step 5:</b> Sell BTC on CoinOne at ${coinoneSellPrice.toLocaleString()} KRW/BTC (fee: ${coinoneSellFeePercent}%) → <b>${krwFromSale.toLocaleString()} KRW</b></p>
-                <h3>Profit: ${profit.toLocaleString()} KRW</h3>
-                <h3>ROI: ${roi.toFixed(2)}%</h3>
-            `;
-        }
-    </script>
+    <div id="profitSummary" class="centered" style="margin-top:30px;"></div>
+    <div id="simulationResults" style="margin-top:30px;"></div>
+    <script src="{{ url_for('static', filename='simulation.js') }}"></script>
 </body>
 </html>
