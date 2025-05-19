@@ -9,6 +9,8 @@ const coinoneSellPrice = 147000000; // 1 BTC = 147,000,000 KRW
 const coinoneSellFeePercent = 0.1; // 0.1%
 const sellSlippagePercent = 0.2; // 0.2% slippage
 const effectiveSellPrice = coinoneSellPrice * (1 - sellSlippagePercent / 100);
+const btcNetworkFee = 0.0001; // BTC (i.e., 10,000 sats)
+
 
 async function getLatestBitvavoPrice() {
     const response = await fetch('/api/latest-bitvavo-eur-price');
@@ -24,7 +26,7 @@ async function runSimulation() {
 
     // Calculate effective prices inside the function
     const effectiveBuyPrice = bitvavoBtcPrice * (1 + buySlippagePercent / 100);
-    
+
     // Step 1: Wise conversion
     const krwAfterWiseFee = krwAmount - wiseFee;
     const eurReceived = krwAfterWiseFee * wiseRate;
@@ -36,7 +38,8 @@ async function runSimulation() {
     const btcBought = (eurAfterDeposit / effectiveBuyPrice) * (1 - bitvavoBuyFeePercent / 100);
 
     // Step 4: Withdraw BTC from Bitvavo
-    const btcAfterWithdraw = btcBought - bitvavoWithdrawFeeBtc;
+    const totalWithdrawFeeBtc = bitvavoWithdrawFeeBtc + btcNetworkFee;
+    const btcAfterWithdraw = btcBought - totalWithdrawFeeBtc;
 
     // Step 5: Sell BTC on CoinOne
     const krwFromSale = btcAfterWithdraw * effectiveSellPrice * (1 - coinoneSellFeePercent / 100);
