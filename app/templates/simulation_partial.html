@@ -1,4 +1,5 @@
 <div class="explanation centered">
+    <h1>Simulation Overview and Requirements</h1>
     This simulation takes into account the current up-to-date Bitcoin prices in two different platforms (European vs 
     Korean), and returns profit & ROI with user-input transaction amount. Put the amount of money you'd like to use 
     for the arbitrage transaction and click "Simulate" button.<br><br>
@@ -12,7 +13,9 @@
         <li>A Korean bank account to receive KRW from CoinOne</li>
         <li>A Bitvavo account to receive EUR from Wise</li>
     </ul>
-     Below shows how much profit and ROI you can expect, and a breakdown of each arbitrage transaction step and how it affects your profitability.
+    <p>
+        Below shows how much profit and ROI you can expect, and a breakdown of each arbitrage transaction step and how it affects your profitability.
+    </p>
 </div>
 
 <div class="centered" style="margin-top:40px;">
@@ -66,16 +69,20 @@
             </tbody>
         </table>
         <div class="explanation-block">
-            <p><b>Estimated Total Time:</b> 1h 45m (Avg)</p>
-            <p>⚠️ Times may vary due to banking hours, BTC network congestion, and FX transfer compliance.</p>
-            <p><b>Why does execution time matter?</b><br>
-            The Korean premium can change significantly over time. If your arbitrage process takes several hours, the premium you see at the start may be very different by the time you finish. Check the premium graphs above to see how much it can fluctuate during the day.</p>
+            <p><b>✅ Fee/Rate and Estimated Time are estimated</b><br>
+            Fee/Rate and Estimated Time in the table are calculated based on recent trends. Getting real-time values from API's is currently under develpment.</p>
+        </div>
+        <div class="explanation-block">
+            <p><b>✅ What is slippage?</b><br>
+            Slippage is the difference between the expected price (quoted/market) and the actual execution price of an asset — due to: Market volatility, Low liquidity at the target price, Delays in execution</p>
         </div>
     </div>
 
 <div class="explanation-block">
-    <p><b>✅ What is slippage?</b><br>
-    Slippage is the difference between the expected price (quoted/market) and the actual execution price of an asset — due to: Market volatility, Low liquidity at the target price, Delays in execution</p>
+    <p><b>Estimated Total Time:</b> 1h 45m (Avg)</p>
+    <p>⚠️ Times may vary due to banking hours, BTC network congestion, and FX transfer compliance.</p>
+    <p><b>Why does execution time matter?</b><br>
+    The Korean premium can change significantly over time. If your arbitrage process takes several hours, the premium you see at the start may be very different by the time you finish. Check the premium graphs above to see how much it can fluctuate during the day.</p>
 </div>
 
 <h2 class="centered" style="margin-top:50px;">Run Simulation</h2>
