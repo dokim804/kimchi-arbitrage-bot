@@ -34,5 +34,9 @@ def data():
     # Return all rows as a list of dicts
     return jsonify(df.to_dict(orient='records'))
 
+@app.route('/simulation')
+def simulation():
+    return render_template('simulation.html')
+    
 if __name__ == '__main__':
     app.run(debug=True)
