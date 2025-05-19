@@ -1,11 +1,14 @@
 <div class="explanation centered">
     <h1>Simulation Overview and Requirements</h1>
-    This simulation takes into account the current up-to-date Bitcoin prices in two different platforms (European vs 
+    <p>
+        This simulation takes into account the current up-to-date Bitcoin prices in two different platforms (European vs 
     Korean), and returns profit & ROI with user-input transaction amount. Put the amount of money you'd like to use 
     for the arbitrage transaction and click "Simulate" button.<br><br>
     The simulation flow assumes that you start your transaction from Korean account. 
     Check the Simulation Flow and Fees table below for more details on the steps involved in the arbitrage process.
     This simulation assumes that you have following accounts:
+    </p>
+    
     <ul style="text-align:left; display:inline-block;">
         <li>A Wise account to convert KRW to EUR</li>
         <li>A Bitvavo account to buy BTC with EUR</li>
@@ -19,7 +22,7 @@
 </div>
 
 <div class="centered" style="margin-top:40px;">
-        <h2>Simulation Flow and Fees</h2>
+        <h1>Simulation Flow and Fees</h1>
         <table style="margin: 0 auto; border-collapse: collapse; font-size: 1em;">
             <thead>
                 <tr>
@@ -68,16 +71,16 @@
                 </tr>
             </tbody>
         </table>
-        <div class="explanation-block">
-            <p><b>✅ Fee/Rate and Estimated Time are estimated</b><br>
-            Fee/Rate and Estimated Time in the table are calculated based on recent trends. Getting real-time values from API's is currently under develpment.</p>
-        </div>
-        <div class="explanation-block">
-            <p><b>✅ What is slippage?</b><br>
-            Slippage is the difference between the expected price (quoted/market) and the actual execution price of an asset — due to: Market volatility, Low liquidity at the target price, Delays in execution</p>
-        </div>
     </div>
 
+<div class="explanation-block">
+    <p><b>✅ Fee/Rate and Estimated Time are estimated</b><br>
+    Fee/Rate and Estimated Time in the table are calculated based on recent trends. Getting real-time values from API's is currently under develpment.</p>
+</div>
+<div class="explanation-block">
+    <p><b>✅ What is slippage?</b><br>
+    Slippage is the difference between the expected price (quoted/market) and the actual execution price of an asset — due to: Market volatility, Low liquidity at the target price, Delays in execution</p>
+</div>
 <div class="explanation-block">
     <p><b>Estimated Total Time:</b> 1h 45m (Avg)</p>
     <p>⚠️ Times may vary due to banking hours, BTC network congestion, and FX transfer compliance.</p>
@@ -85,12 +88,12 @@
     The Korean premium can change significantly over time. If your arbitrage process takes several hours, the premium you see at the start may be very different by the time you finish. Check the premium graphs above to see how much it can fluctuate during the day.</p>
 </div>
 
-<h2 class="centered" style="margin-top:50px;">Run Simulation</h2>
+<h1 class="centered" style="margin-top:50px;">Run Simulation</h1>
 <form id="simForm" class="centered">
     <label for="krwAmount">Amount to Arbitrage (KRW):</label>
     <input type="number" id="krwAmount" value="1000000" min="10000" step="10000">
     <button type="button" onclick="runSimulation()">Simulate</button>
 </form>
-<h3 class="centered" style="margin-top:50px;">Simulation Results</h3>
+<h1 class="centered" style="margin-top:50px;">Simulation Results</h1>
 <div id="profitSummary" class="centered" style="margin-top:30px;"></div>
 <div id="simulationResults" class="centered" style="margin-top:30px;"></div>
