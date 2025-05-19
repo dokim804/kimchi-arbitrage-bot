@@ -4,7 +4,6 @@ const wiseFee = 5000; // 5,000 KRW fee
 const bitvavoDepositFee = 0; // 0 EUR
 const bitvavoBuyFeePercent = 0.25; // 0.25%
 const buySlippagePercent = 0.3; // 0.3% slippage
-const effectiveBuyPrice = bitvavoBtcPrice * (1 + buySlippagePercent / 100);
 const bitvavoWithdrawFeeBtc = 0.0005; // 0.0005 BTC
 const coinoneSellPrice = 147000000; // 1 BTC = 147,000,000 KRW
 const coinoneSellFeePercent = 0.1; // 0.1%
@@ -23,6 +22,9 @@ async function runSimulation() {
     // Fetch the latest Bitvavo BTC price
     const bitvavoBtcPrice = await getLatestBitvavoPrice();
 
+    // Calculate effective prices inside the function
+    const effectiveBuyPrice = bitvavoBtcPrice * (1 + buySlippagePercent / 100);
+    
     // Step 1: Wise conversion
     const krwAfterWiseFee = krwAmount - wiseFee;
     const eurReceived = krwAfterWiseFee * wiseRate;
