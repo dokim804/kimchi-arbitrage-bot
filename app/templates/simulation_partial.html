@@ -1,0 +1,28 @@
+<div class="explanation centered">
+    This simulation takes into account the current up-to-date Bitcoin prices in two different platforms (European vs Korean), and returns profit & ROI with user-input transaction amount. Put the amount of money you'd like to use for the arbitrage transaction.<br><br>
+    The scenario is that you send KRW from a Korean account to buy Bitcoins on a European Bitcoin platform (Bitvavo). For this, you need to transfer money from Korean to European account. Afterwards, you will transfer Bitcoin from the European to the Korean Bitcoin platform (CoinOne), sell it, and make profit. Below shows how much profit and ROI you can expect, and a breakdown of each arbitrage transaction step and how it affects your profitability.
+</div>
+
+<div class="centered" style="margin-top:40px;">
+    <h2>Simulation Flow and Fees</h2>
+    <table style="margin: 0 auto; border-collapse: collapse; font-size: 1em;">
+        <!-- You can add a summary table here if you wish -->
+    </table>
+    <div class="explanation-block"></div>
+</div>
+
+<div class="explanation-block">
+    <p><b>✅ What is slippage?</b><br>
+    Slippage is the difference between the expected price (quoted/market) and the actual execution price of an asset — due to: Market volatility, Low liquidity at the target price, Delays in execution</p>
+    <p><b>⚠️ Estimated BTC transfer time:</b> 45 minutes (may vary with network conditions)</p>
+</div>
+
+<h2 class="centered" style="margin-top:50px;">Run Simulation</h2>
+<form id="simForm" class="centered">
+    <label for="krwAmount">Amount to Arbitrage (KRW):</label>
+    <input type="number" id="krwAmount" value="1000000" min="10000" step="10000">
+    <button type="button" onclick="runSimulation()">Simulate</button>
+</form>
+<h3 class="centered" style="margin-top:50px;">Simulation Results</h3>
+<div id="profitSummary" class="centered" style="margin-top:30px;"></div>
+<div id="simulationResults" class="centered" style="margin-top:30px;"></div>

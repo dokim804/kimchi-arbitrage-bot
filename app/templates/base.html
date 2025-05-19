@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Korean Premium Arbitrage Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #fafbfc; }
+        .tab-bar {
+            display: flex;
+            justify-content: center;
+            background: #f0f0f0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 0;
+        }
+        .tab {
+            padding: 18px 36px;
+            cursor: pointer;
+            color: #888;
+            font-size: 1.2em;
+            border: none;
+            background: none;
+            outline: none;
+            transition: color 0.2s, border-bottom 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+        .tab.active {
+            color: #222;
+            border-bottom: 3px solid #4CAF50;
+            font-weight: bold;
+            background: #fff;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #eee;
+            padding: 36px 32px 32px 32px;
+        }
+        .centered { text-align: center; }
+        .hidden { display: none; }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="tab-bar">
+        <button class="tab active" id="tab-home" onclick="showTab('home')">Home</button>
+        <button class="tab" id="tab-dashboard" onclick="showTab('dashboard')">Bitcoin price tracker</button>
+        <button class="tab" id="tab-simulation" onclick="showTab('simulation')">Profitability Simulation</button>
+    </div>
+    <div class="container">
+        <div id="content-home">
+            <h1 class="centered">Korean Premium Arbitrage Dashboard</h1>
+            <p>
+                This dashboard helps you track the "Kimchi Premium"—the price difference of Bitcoin between Korean and global exchanges—and simulate potential arbitrage profits.
+            </p>
+            <ul>
+                <li><b>Bitcoin price tracker:</b> Visualizes real-time BTC prices and the Korean premium over time.</li>
+                <li><b>Profitability Simulation:</b> Lets you simulate an arbitrage trade, including all fees, slippage, and transfer times, to estimate profit and ROI.</li>
+            </ul>
+            <p>
+                Use the tabs above to switch between the price tracker and the simulation tool.
+            </p>
+        </div>
+        <div id="content-dashboard" class="hidden"></div>
+        <div id="content-simulation" class="hidden"></div>
+    </div>
+    <script>
+        // Tab switching logic
+        function showTab(tab) {
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            // Hide all content
+            document.getElementById('content-home').classList.add('hidden');
+            document.getElementById('content-dashboard').classList.add('hidden');
+            document.getElementById('content-simulation').classList.add('hidden');
+            // Show selected tab and set active
+            if (tab === 'home') {
+                document.getElementById('tab-home').classList.add('active');
+                document.getElementById('content-home').classList.remove('hidden');
+            } else if (tab === 'dashboard') {
+                document.getElementById('tab-dashboard').classList.add('active');
+                document.getElementById('content-dashboard').classList.remove('hidden');
+                loadTabContent('dashboard');
+            } else if (tab === 'simulation') {
+                document.getElementById('tab-simulation').classList.add('active');
+                document.getElementById('content-simulation').classList.remove('hidden');
+                loadTabContent('simulation');
+            }
+        }
+
+        // Load tab content via AJAX
+        function loadTabContent(tab) {
+            let url = '';
+            if (tab === 'dashboard') url = '/tab/dashboard';
+            if (tab === 'simulation') url = '/tab/simulation';
+            fetch(url)
+                .then(resp => resp.text())
+                .then(html => {
+                    document.getElementById('content-' + tab).innerHTML = html;
+                    // If simulation tab, reload its JS
+                    if (tab === 'simulation') {
+                        const oldScript = document.getElementById('simulation-js');
+                        if (oldScript) oldScript.remove();
+                        const script = document.createElement('script');
+                        script.src = '/static/simulation.js';
+                        script.id = 'simulation-js';
+                        document.body.appendChild(script);
+                    }
+                    // If dashboard tab, reload its JS
+                    if (tab === 'dashboard') {
+                        const oldScript = document.getElementById('dashboard-js');
+                        if (oldScript) oldScript.remove();
+                        const script = document.createElement('script');
+                        script.src = '/static/app.js';
+                        script.id = 'dashboard-js';
+                        document.body.appendChild(script);
+                    }
+                });
+        }
+
+        // Default: show home tab
+        showTab('home');
+    </script>
+</body>
+</html>

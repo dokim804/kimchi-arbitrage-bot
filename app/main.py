@@ -15,8 +15,16 @@ CONTAINER_NAME = "koreanpremium"
 BLOB_NAME = "korean_premium_log.csv"
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('base.html')
+
+@app.route('/tab/dashboard')
+def tab_dashboard():
+    return render_template('index_partial.html')
+
+@app.route('/tab/simulation')
+def tab_simulation():
+    return render_template('simulation_partial.html')
 
 @app.route('/data')
 def data():
