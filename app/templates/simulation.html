@@ -34,6 +34,53 @@
         This simulation takes into account the current up-to-date Bitcoin prices in two different platforms (European vs Korean), and returns profit & ROI with given arbitrage amount. Put the amount of money you'd like to use for the arbitrage transaction.<br><br>
         The scenario is that you send KRW from a Korean account to buy Bitcoins on a European Bitcoin platform. For this, you need to transfer money from Korean to European account. Afterwards, you will transfer Bitcoin from the European to the Korean Bitcoin platform, sell it, and make profit. Below shows how much profit and ROI you can expect, and a breakdown of each arbitrage transaction step and how it affects your profitability.
     </div>
+    <div class="centered" style="margin-top:40px;">
+    <h2>Simulation Flow and Fees</h2>
+    <table style="margin: 0 auto; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="border:1px solid #ccc; padding:8px;">Step</th>
+                <th style="border:1px solid #ccc; padding:8px;">Description</th>
+                <th style="border:1px solid #ccc; padding:8px;">Fee/Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border:1px solid #ccc; padding:8px;">1</td>
+                <td style="border:1px solid #ccc; padding:8px;">Convert KRW → EUR via Wise</td>
+                <td style="border:1px solid #ccc; padding:8px;">5,000 KRW, FX spread included in conversion rate</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ccc; padding:8px;">2</td>
+                <td style="border:1px solid #ccc; padding:8px;">Deposit EUR to Bitvavo</td>
+                <td style="border:1px solid #ccc; padding:8px;">0 EUR</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ccc; padding:8px;">3</td>
+                <td style="border:1px solid #ccc; padding:8px;">Buy BTC with EUR</td>
+                <td style="border:1px solid #ccc; padding:8px;">0.25% fee + 0.3% slippage</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ccc; padding:8px;">4</td>
+                <td style="border:1px solid #ccc; padding:8px;">Withdraw BTC to CoinOne</td>
+                <td style="border:1px solid #ccc; padding:8px;">0.0005 BTC + network fee</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ccc; padding:8px;">5</td>
+                <td style="border:1px solid #ccc; padding:8px;">Sell BTC on CoinOne</td>
+                <td style="border:1px solid #ccc; padding:8px;">0.1% fee + 0.2% slippage</td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="max-width:700px; margin:20px auto; text-align:left; font-size:1em; color:#444;">
+        <p><b>🏦 What Is an FX Spread?</b><br>
+        When you exchange currencies (e.g. KRW → EUR), you're given an exchange rate. But this rate isn’t always the real “mid-market rate” — it includes a markup added by the currency exchange service (like Wise, banks, or credit cards). That markup is called the FX spread.</p>
+        <p><b>✅ What is slippage?</b><br>
+        Slippage is the difference between the expected price (quoted/market) and the actual execution price of an asset — due to: Market volatility, Low liquidity at the target price, Delays in execution</p>
+        <p><b>⚠️ Estimated BTC transfer time:</b> 45 minutes (may vary with network conditions)</p>
+    </div>
+    </div>
+
     <form id="simForm" class="centered">
         <label for="krwAmount">Amount to Arbitrage (KRW):</label>
         <input type="number" id="krwAmount" value="1000000" min="10000" step="10000">
